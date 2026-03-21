@@ -1,6 +1,7 @@
 package alex.code.chakrayCodeTest.model;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,17 +42,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "tax_id")
-    private String tax_id;
+    @Column(name = "tax_id", unique = true)
+    private String taxId;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private ZonedDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Address> addresses;
 
     @PrePersist
     public void prePersist() {
-        createdAt = LocalDateTime.now();
+        createdAt = ZonedDateTime.now(ZoneId.of("Indian/Antananarivo"));
     }
 }
